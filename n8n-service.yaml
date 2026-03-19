@@ -7,6 +7,7 @@ spec:
   selector:
     app: n8n
   ports:
-  - port: 80
+  - name: http
+    port: 5678
     targetPort: 5678
   type: ClusterIP 
