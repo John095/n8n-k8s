@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: n8n
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/John095/n8n-k8s
+    targetRevision: main          # branch to watch
+    path: manifests/              # folder with your YAMLs
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: n8n
+  syncPolicy:
+    automated:
+      prune: true                 # delete K8s resources removed from Git
+      selfHeal: true              # fix manual kubectl changes automatically
+    syncOptions:
+    - CreateNamespace=true
