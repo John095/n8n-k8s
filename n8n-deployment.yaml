@@ -40,6 +40,8 @@ spec:
               value: "5678"
             - name: N8N_PROTOCOL
               value: "http"
+            - name: N8N_RUNNERS_ENABLED
+              value: "false"
           resources:
             requests:
               memory: "256Mi"
@@ -51,11 +53,13 @@ spec:
             httpGet:
               path: /healthz
               port: 5678
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60 # was 30
             periodSeconds: 10
+            failureThreshold: 10 # allow 10 failures before giving up
           livenessProbe:
             httpGet:
               path: /healthz
               port: 5678
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120 # was 60 — give it 2 full minutes
             periodSeconds: 15
+            failureThreshold: 5
