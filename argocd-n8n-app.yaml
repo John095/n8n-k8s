@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/John095/n8n-k8s
     targetRevision: main          # branch to watch
-    path: manifests/              # folder with your YAMLs
+    path: .              # folder with your YAMLs
   destination:
     server: https://kubernetes.default.svc
     namespace: n8n
