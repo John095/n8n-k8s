@@ -39,3 +39,9 @@ ingress:
     - secretName: n8n-tls
       hosts:
         - n8n.local
+
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: admin123
