@@ -33,7 +33,13 @@ spec:
             - name: N8N_BASIC_AUTH_PASSWORD
               value: "changeme123"
             - name: WEBHOOK_URL
-              value: "http://n8n.yourdomain.com"
+              value: "http://n8n.local"
+            - name: N8N_HOST
+              value: "n8n.local"
+            - name: N8N_PORT
+              value: "5678"
+            - name: N8N_PROTOCOL
+              value: "http"
           resources:
             requests:
               memory: "256Mi"
@@ -41,16 +47,15 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5678
-            initialDelaySeconds: 30
-            periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 5678
             initialDelaySeconds: 30
             periodSeconds: 10
-
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+            initialDelaySeconds: 60
+            periodSeconds: 15
