@@ -1,0 +1,26 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: local-cluster
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 30080   # NodePort for n8n
+    hostPort: 30080
+    protocol: TCP
+  - containerPort: 30090   # NodePort for Grafana
+    hostPort: 30090
+    protocol: TCP
+  - containerPort: 30091   # NodePort for Prometheus
+    hostPort: 30091
+    protocol: TCP
+  - containerPort: 30092   # NodePort for ArgoCD
+    hostPort: 30092
+    protocol: TCP
+- role: worker
+- role: worker

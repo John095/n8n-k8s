@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: n8n-alerts
+  namespace: monitoring
+  labels:
+    release: kube-prom
+spec:
+  groups:
+    - name: n8n.rules
+      rules:
+        - alert: N8nPodDown
+          expr: |
+            kube_pod_status_ready{
+              namespace="n8n",condition="true"
+            } == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "n8n pod is not ready"
+        - alert: N8nHighMemory
+          expr: |
+            container_memory_working_set_bytes{
+              namespace="n8n",container="n8n"
+            } > 450000000
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "n8n memory near limit"
