@@ -30,7 +30,7 @@ spec:
               memory: "256Mi"
               cpu: "100m"
             limits:
-              memory: "512Mi"
+              memory: "600Mi"
               cpu: "500m"
           volumeMounts:
             - name: n8n-data
